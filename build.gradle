@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'jacoco'
+	id "org.sonarqube" version "4.4.1.3373"
 }
 
 configurations {
@@ -80,6 +81,14 @@ jacocoTestReport {
 	)
 	
 	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+sonar {
+  properties {
+    property "sonar.projectKey", "jaeminYu2655_Shuttle"
+    property "sonar.organization", "jaeminyu2655"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
 
 // jacoco 커버리지 검증 설정
