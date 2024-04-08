@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="app.log.level">info</Property>
+        <Property name="default.log.level">info</Property>
+        <Property name="log.dir">c:/logs</Property>
+        <Property name="log4j2.Console.Encoding">UTF-8</Property>
+        <Property name="log.pattern">%style{%d{yyyy/MM/dd HH:mm:ss,SSS}}{cyan} %highlight{[%-5p]}{FATAL=bg_red, ERROR=red,
+            INFO=green, DEBUG=blue}  [%C] %style{[%t]}{yellow} %m%n </Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" disableAnsi="false" pattern="${log.pattern}" />
+        </Console>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg [%file:%line]%n</pattern>
+        </encoder>
+        <RollingFile name="rollingFile" fileName="${log.dir}/output.log" filePattern="@{log.dir}/backup/output_%d{yyyyMMdd}.%i.log">
+            <PatternLayout disableAnsi="false" pattern="${log.pattern}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" /> <!-- 10MB 용량이 초과시 DefaultRolloverStrategy 정책만큼 넘버링 -->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" /><!-- 일별 로그 파일 생성-->
+            </Policies>
+            <DefaultRolloverStrategy max="500" fileIndex="min" /> <!-- 롤링 파일 500개 까지 생성 -->
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!--jdbc.sqlonly - SQL문을 보여줌-->
+        <!--jdbc.sqltiming - SQL문과 SQL문 수행하는 시간을 같이 보여줌-->
+        <!--jdbc.resultsettable - SQL의 결과로 조회된 데이터를 table 형태로 로그를 보여줌-->
+        <!--jdbc.audit - ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 보여줌, 상당히 많은 양의 로그가 나오기 때문에 권장하지 않음.-->
+        <!--jdbc.resultset - ResultSet 을 포함한 모든 JDBC 호출 정보를 로그로 보여줌, audit 처럼 많은 로그가 나오기 때문에 권장하지 않음.-->
+        <!--jdbc.connection - DB 연결, 연결 해제와 관련된 로그를 보여줌-->
+        <logger name="jdbc" level="OFF"/>
+        <logger name="jdbc.sqlonly" level="OFF"/>
+        <logger name="jdbc.sqltiming" level="OFF"/>
+        <logger name="jdbc.audit" level="OFF"/>
+        <logger name="jdbc.resultset" level="OFF"/>
+        <logger name="jdbc.connection" level="OFF"/>
+        <Logger name="org.hibernate" level="ERROR" />
+
+        <!-- 스프링 프레임워크에서 찍는건 level을 info로 설정 -->
+        <logger name="org.springframework" level="info" additivity="false" >
+            <AppenderRef ref="console" />
+            <AppenderRef ref="rollingFile" />
+        </logger>
+
+        <!-- 기본 레벨은 debug -->
+        <Root level="debug" additivity="false" >
+            <AppenderRef ref="console" />
+            <AppenderRef ref="rollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>

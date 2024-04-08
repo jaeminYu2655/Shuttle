@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lgcns.shuttle.rms.domain.sample2.repository.Test2Mapper">
+    <select id="selectLocHdr" parameterType="String" resultType="lgcns.shuttle.rms.domain.sample2.model.Test">
+        /* selectTest2.xml lgcns.shuttle.rms.domain.test2.repository.TestMapper.selectLocHdr */
+        SELECT LOC_NO
+             , LOC_STAT_CD
+             , TOTE_BCD
+          FROM TB_SHT_LOC_HDR
+         WHERE 1=1
+           AND LOC_STAT_CD = #{locStatCd}
+    </select>
+</mapper>

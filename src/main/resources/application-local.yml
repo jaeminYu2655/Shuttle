@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - local
+  datasource:
+    hikari:
+      maria:
+        driver-class-name: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://awsmariadb.c3k06zxlocsd.ap-northeast-2.rds.amazonaws.com:3306/shuttle_rms
+        #        url: jdbc:log4jdbc:mariadb://awsmariadb.c3k06zxlocsd.ap-northeast-2.rds.amazonaws.com:3306
+        username: smartwcs
+        password: smartwcs1234
+logging:
+  file:
+    encoding: UTF-8
+  config: classpath:log4j2-local.xml
+
+jwt:
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
